@@ -12,9 +12,10 @@ import com.example.retrofitmvvmrxjava.R;
 import com.example.retrofitmvvmrxjava.adapter.PostAdapter;
 import com.example.retrofitmvvmrxjava.viewmodel.MainViewModel;
 
-import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         disposable = mainViewModel.getPosts().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(posts ->{
                 recyclerView.setAdapter(new PostAdapter(posts));
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));

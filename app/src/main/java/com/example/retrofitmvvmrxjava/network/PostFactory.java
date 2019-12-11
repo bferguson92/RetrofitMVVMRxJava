@@ -4,6 +4,7 @@ import com.example.retrofitmvvmrxjava.model.PostResponse;
 
 import java.util.List;
 
+
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
