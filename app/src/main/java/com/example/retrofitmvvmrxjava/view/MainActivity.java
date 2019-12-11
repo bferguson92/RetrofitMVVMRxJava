@@ -1,24 +1,18 @@
 package com.example.retrofitmvvmrxjava.view;
 
-import androidx.annotation.MainThread;
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import com.example.retrofitmvvmrxjava.R;
 import com.example.retrofitmvvmrxjava.adapter.PostAdapter;
-import com.example.retrofitmvvmrxjava.model.PostResponse;
 import com.example.retrofitmvvmrxjava.viewmodel.MainViewModel;
 
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -37,10 +31,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.display_posts);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        disposable = mainViewModel.getPosts().subscribe(posts ->{
+        disposable = mainViewModel.getPosts().subscribeOn(Schedulers.io())
+                .subscribe(posts ->{
                 recyclerView.setAdapter(new PostAdapter(posts));
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                }, error -> Log.e("ERROR", "nothing"));
+                }, error -> Log.e("ERROR", error.toString()));
     }
 
     @Override
