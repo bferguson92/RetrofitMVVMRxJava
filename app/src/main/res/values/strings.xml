@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RetrofitMVVMRxJava</string>
+    <string name="error_posts">ERROR: COULD NOT FETCH POSTS</string>
 </resources>
